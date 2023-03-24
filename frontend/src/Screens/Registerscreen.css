@@ -1,0 +1,9 @@
+.message{
+    /* visibility: hidden; */
+    display: none;
+    padding: 10px;
+}
+.message-success{
+    visibility: visible;
+    padding: 5px;
+}
