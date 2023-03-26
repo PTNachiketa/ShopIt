@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col , Alert  } from 'react-bootstrap'
 import { useDispatch} from 'react-redux'
 import { authAction } from '../store/store'
@@ -17,6 +17,7 @@ const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(null)
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   // useEffect(() => {
   //   fetch( "http://localhost:8000/users")
   //   .then(res =>{
@@ -51,6 +52,7 @@ const LoginScreen = () => {
     if (!response.ok) {
       setIsLoading(false)
       setError(json.error)
+      return
     }
     if (response.ok) {
       // save the user to local storage
@@ -67,6 +69,7 @@ const LoginScreen = () => {
       setIsLoading(false)
 
       setAlert(true)
+      navigate('/')
     }
  
     // users.map((user)=>{

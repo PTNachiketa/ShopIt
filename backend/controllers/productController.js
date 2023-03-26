@@ -13,6 +13,7 @@ const getproducts = async (req,res)=>{
 
 const postproduct = async (req,res)=>{
     const postproduct = req.body
+    console.log(req.body)
     
     product.create(postproduct)
     .then(result=>{

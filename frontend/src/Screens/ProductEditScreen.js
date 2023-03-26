@@ -56,28 +56,42 @@ const ProductEditScreen = () => {
         "rating": 4,
         "numReviews": 10
       }
- 
-     try {
-      const response = await fetch("http://localhost:9999/products",{
-        method : 'POST',
-        body : JSON.stringify(product),
-        headers : {'Content-Type' : 'application/json'}
-       })
-       const json = await response.json()
-       if(response.ok){
-        setMessage("Product Added Successfully")
 
-       }
-       if(!response.ok){
-        setError(true)  
-        setMessage(json.msg)
-       }
-       
-     } catch (error) {
-      console.log(error)
-     
-     }
-    
+      const fileInput = document.querySelector('input[type="file"]');
+      // Create a new FormData object
+      const formData = new FormData();
+
+      // Add the product data to the FormData object
+      formData.append('id', product.id)
+      formData.append('name', product.name);
+      formData.append("image","/images/"+fileInput.files[0].name)
+      formData.append('description', product.description);
+      formData.append("brand",product.brand)
+      formData.append("category",product.category)
+      formData.append('price', product.price);
+      formData.append("countInStock",product.countInStock)
+      formData.append("rating",product.rating)
+      formData.append("numReviews",product.numReviews)
+
+      // Add the file to the FormData object
+      formData.append('image', fileInput.files[0]);
+ 
+      try {
+        const response = await fetch('http://localhost:9999/products', {
+          method: 'POST',
+          body: formData
+        });
+        const json = await response.json();
+        if (response.ok) {
+          setMessage('Product Added Successfully');
+        }
+        if (!response.ok) {
+          setError(true);
+          setMessage(json.msg);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     
   
 }
@@ -150,7 +164,7 @@ const ProductEditScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group className='mb-3' controlId='image'>
+        {/* <Form.Group className='mb-3' controlId='image'>
           <Form.Label>Image URL</Form.Label>
           <Form.Control
             type='text'
@@ -159,11 +173,11 @@ const ProductEditScreen = () => {
             onChange={(e) => setImage(e.target.value)}
             required
           ></Form.Control>
-        </Form.Group>
+        </Form.Group> */}
         
         <Form.Group className='mb-3' controlId='imageUpload'>
         <Form.Label>Upload Image</Form.Label>
-        <input type="File" name="image"/>
+        <input type="file" name="productimage"/>
         </Form.Group>
 
 

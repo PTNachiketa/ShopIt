@@ -42,41 +42,27 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 //Morgan middleware to log HTTP requests to a file
 app.use(morgan('short', { stream: accessLogStream, skip: (req, res) => req.path.startsWith('/static') }));
 
+//Multer
+const upload = path.join(__dirname, '..', '..', 'fsd_project', 'frontend', 'public', 'images');
 
-
-// Create storage for multer
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '../frontend/public/images');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
-
-
-// Initialize multer upload
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 }, // Limit the size of the uploaded file to 1 MB
-  fileFilter: function (req, file, cb) {
-    // Only allow jpeg, jpg, and png file types
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png') {
-      cb(null, true);
-    } else {
-      cb(new Error('Only jpeg, jpg, and png file types are allowed.'));
+    destination: function (req, file, cb) {
+      console.log('i am here')
+      cb(null, upload)
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.originalname)
     }
-  }
-}).single('image');
+})
 
-
-
+const imageupload = multer({ storage: storage })
 
 
 //APIs for Products
 app.get('/products',getproducts)
 
-app.post('/products',postproduct)
+app.post('/products', imageupload.single('image') , postproduct)
 
 app.delete('/products/:id',deleteproduct)
 
