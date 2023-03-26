@@ -10,11 +10,13 @@ const authSlice = createSlice({
     login(state, action) {
       state.isLoggedIn = true;
       state.token = action.payload;
+      localStorage.setItem('user', JSON.stringify(action.payload))
     },
     logout(state) {
       state.isLoggedIn = false;
       state.token = "";
       state.isAdmin = false;
+      localStorage.removeItem('user')
     },
     setAdmin(state){
       state.isAdmin = true
@@ -68,9 +70,13 @@ const cartSlice = createSlice({
   },
 });
 
+
 const store = configureStore({
   reducer: { auth: authSlice.reducer, cart: cartSlice.reducer },
 });
+
+
+
 
 export const authAction = authSlice.actions;
 export const cartAction = cartSlice.actions;

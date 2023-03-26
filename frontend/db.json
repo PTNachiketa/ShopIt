@@ -907,6 +907,37 @@
       "isPaid": true,
       "isDelivered": true,
       "id": 6
+    },
+    {
+      "orders": {
+        "orderItems": [
+          {
+            "_id": "641fce63d80c0023b469ccd6",
+            "id": 1,
+            "name": "Airpods Wireless Bluetooth Headphones",
+            "image": "/images/airpods.png",
+            "description": "Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working'",
+            "brand": "Apple",
+            "category": "Electronics",
+            "price": 13400,
+            "countInStock": 10,
+            "rating": 4.6,
+            "numReviews": 12,
+            "qty": "1"
+          }
+        ],
+        "shippingAddress": {
+          "address": "Guntur",
+          "city": "GunturTown",
+          "postalCode": "6879",
+          "country": ""
+        },
+        "paymentMethod": "Online Banking",
+        "totalPrice": 14170
+      },
+      "isPaid": true,
+      "isDelivered": true,
+      "id": 7
     }
   ]
 }

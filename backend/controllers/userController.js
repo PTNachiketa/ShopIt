@@ -7,15 +7,15 @@ const createToken = (_id)=>{
 
 // login a user
 const loginUser = async (req, res) => {
-    const {name,email,password,Token} = req.body
+    const {email,password} = req.body
   
     try {
-      const user = await User.login(name,email, password,Token)
+      const user = await User.login(email, password)
   
       // create a token
       const token = createToken(user._id)
   
-      res.status(200).json({email, token})
+      res.status(200).json({email, token,AdminToken:user.Token,user})
     } catch (error) {
       res.status(400).json({error: error.message})
     }
@@ -51,24 +51,48 @@ const postuser = async(req,res)=>{
     
 }
 
-const updateuser = async(req,res)=>{
-    const updateduser = req.body
+// const updateuser = async(req,res)=>{
+//     const updateduser = req.body
 
-    User.updateOne({email:updateduser.email},{name:updateduser.name,password:updateduser.password})
-    .then(result=>{
-        if(result){
-            res.status(200).send(result)
-        }
-        else{
-            res.status(400).send(result)
-        }
-    })
-    .catch(err=>{
-        console.log(err)
-        res.sendStatus(500)
-    })
+//     User.updateOne({email:updateduser.email},{name:updateduser.name,password:updateduser.password})
+//     .then(result=>{
+//         if(result){
+//             res.status(200).send(result)
+//         }
+//         else{
+//             res.status(400).send(result)
+//         }
+//     })
+//     .catch(err=>{
+//         console.log(err)
+//         res.sendStatus(500)
+//     })
+// }
+
+const updateuser = async (req,res)=>{
+    const userId = req.params.id;
+    const { name, email, password,Token } = req.body;
+  
+    try {
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      user.name = name || user.name;
+      user.email = email || user.email;
+      user.password = password || user.password;
+      user.Token = Token
+      await user.save();
+  
+      return res.status(200).json({ message: 'User updated successfully', user });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Server error' });
+    }
 }
 
 
 
-module.exports = {getusers,postuser,updateuser}
+module.exports = {getusers,postuser,updateuser,loginUser}

@@ -5,7 +5,7 @@ import { useState } from 'react'
 const ProductListScreen = () => {
   const [Aproducts,setAproducts] = useState(null)
   useEffect(() => {
-    fetch( "http://localhost:8000/products")
+    fetch( "http://localhost:9999/products")
     .then(res =>{
       
       return res.json()
@@ -23,8 +23,8 @@ const ProductListScreen = () => {
     
   }, [Aproducts])
 
-  const HandleDelete = async (id)=>{
-    await fetch("http://localhost:8000/products/" + id,{
+    const HandleDelete = async (id)=>{
+    await fetch("http://localhost:9999/products/" + id,{
       method : 'DELETE'
       
      })

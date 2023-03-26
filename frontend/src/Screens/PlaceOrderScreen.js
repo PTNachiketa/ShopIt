@@ -15,15 +15,18 @@ const PlaceOrderScreen = () => {
     return (price * 8) / 100;
   };
   const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'))
+  //console.log(user)
 
   const updateOrders = async (order) => {
-    await fetch("http://localhost:8000/orders", {
+    await fetch("http://localhost:9999/orders", {
       method: "POST",
       body: JSON.stringify({
         orders: order,
-        user_id: userI.id,
+        user_id: user._id,
         isPaid: true,
         isDelivered: false,
+
       }),
       headers: { "Content-Type": "application/json" },
     });

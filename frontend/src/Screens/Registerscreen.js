@@ -13,14 +13,24 @@ const RegisterScreen = () => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [token , setToken] = useState('')
   const [message, setMessage] = useState(null)
+  const [error,setError] = useState(null)
   const [alert,setAlert] = useState(null)
+  const [isLoading,setIsLoading] = useState(null)
   const navigate = useNavigate();
+  const StrongPassword = "Strong Password should contain minimum 8 characters and atleast 1 special character,capital letter,number"
 
 
 
   const submitHandler = async (e) => {
     e.preventDefault()
-    
+
+    setIsLoading(true)
+    setError(null)
+    if(password!==confirmPassword){
+      setError("Confirm password does not match with the password")
+      setIsLoading(null)
+      return
+    }
       const user = {
         "name" : name,
         "email" : email,
@@ -28,19 +38,26 @@ const RegisterScreen = () => {
         "Token" : token
       }
  
-     const msg = await fetch("http://localhost:8000/users",{
+     const response = await fetch("http://localhost:9999/users",{
        method : 'POST',
        body : JSON.stringify(user),
        headers : {'Content-Type' : 'application/json'}
       })
-    navigate("/login")
-    
+      const json = await response.json()
+      if(!response.ok){
+          setIsLoading(false)
+          setError(json.error)
+      }
+      if(response.ok){
+        navigate("/login")
+      }
   }
 
   return (
     <FormContainer>
       <h1>Sign Up</h1>
-      {message && <Message variant='danger'>{message}</Message>}
+      {error && <Message variant='danger'>{error}</Message>}
+      {error &&(error.includes("Password")&&<Message variant='warning'>{StrongPassword}</Message>)}
       <Form onSubmit={submitHandler} autoComplete='off'>
         <Form.Group className='mb-3' controlId='name'>
           <Form.Label>Name</Form.Label>
@@ -51,7 +68,7 @@ const RegisterScreen = () => {
             onChange={(e) => setName(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        {(name ==='' || name.length < 7) ?<Message className ="message" variant = 'danger'> Name should consists of minmum 7 characters </Message>:<Message className="message-success"variant = 'success'>Perfect</Message>}
+        {/* {(name ==='' || name.length < 7) ?<Message className ="message" variant = 'danger'> Name should consists of minmum 7 characters </Message>:<Message className="message-success"variant = 'success'>Perfect</Message>} */}
         <Form.Group className='mb-3' controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
@@ -61,7 +78,7 @@ const RegisterScreen = () => {
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        {email ==='' || !email.includes('@gmail.com') ? <Message className ="message" variant = 'danger'>Invalid Email </Message> :<Message className="message-success" variant = 'success'>Perfect</Message>}
+        {/* {email ==='' || !email.includes('@gmail.com') ? <Message className ="message" variant = 'danger'>Invalid Email </Message> :<Message className="message-success" variant = 'success'>Perfect</Message>} */}
         <Form.Group className='mb-3' controlId='password'>
           <Form.Label>Password</Form.Label>
           <Form.Control
@@ -71,7 +88,7 @@ const RegisterScreen = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        {password.length< 8 ? <Message className ="message"variant = 'danger'>Password should be {'>'}8 characters</Message> :<Message className="message-success" variant = 'success'>Perfect</Message>}
+        {/* {password.length< 8 ? <Message className ="message"variant = 'danger'>Password should be {'>'}8 characters</Message> :<Message className="message-success" variant = 'success'>Perfect</Message>} */}
         <Form.Group className='mb-3' controlId='confirmPassword'>
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
@@ -81,7 +98,7 @@ const RegisterScreen = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
-        {confirmPassword !== password && confirmPassword !== '' ? <Message className ="message" variant = 'danger'>confirm password should be same as password</Message> :<Message  className="message-success" variant = 'success'>Perfect</Message>}
+        {/* {confirmPassword !== password && confirmPassword !== '' ? <Message className ="message" variant = 'danger'>confirm password should be same as password</Message> :<Message  className="message-success" variant = 'success'>Perfect</Message>} */}
         <Form.Group className='mb-3' controlId='name'>
           <Form.Label>AdminToken</Form.Label>
           <Form.Control
@@ -93,10 +110,11 @@ const RegisterScreen = () => {
         </Form.Group>
 
 
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='primary' disabled={isLoading}>
           Register
         </Button>
       </Form>
+      
 
       <Row className='py-3'>
         <Col>

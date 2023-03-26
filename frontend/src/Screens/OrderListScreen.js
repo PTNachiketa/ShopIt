@@ -2,7 +2,10 @@ import React from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { Table, Button } from "react-bootstrap";
 
-const OrderListScreen = ({ orders }) => {
+const OrderListScreen = ({ orders,users }) => {
+  
+  
+  
   return (
     <>
       <h1>Orders</h1>
@@ -10,8 +13,8 @@ const OrderListScreen = ({ orders }) => {
       <Table striped bordered hover responsive className="table-sm">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>USER</th>
+            
+            
             <th>TOTAL</th>
             <th>PAID</th>
             <th>DELIVERED</th>
@@ -20,9 +23,9 @@ const OrderListScreen = ({ orders }) => {
         </thead>
         <tbody>
           {orders.map((order) => (
-            <tr key={order.id}>
-              <td>{order.id}</td>
-              <td>{order.user_id}</td>
+            <tr key={order._id}>
+              
+              
 
               <td>₹{order.orders.totalPrice}</td>
               <td>
@@ -40,7 +43,7 @@ const OrderListScreen = ({ orders }) => {
                 )}
               </td>
               <td>
-                <LinkContainer to={`/order/${order.id}`}>
+                <LinkContainer to={`/order/${order._id}`}>
                   <Button variant="light" className="btn-sm">
                     Details
                   </Button>

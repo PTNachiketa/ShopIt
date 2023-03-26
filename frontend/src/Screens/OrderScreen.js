@@ -10,14 +10,15 @@ const OrderScreen = ({ orders, users }) => {
   const { id } = useParams();
 
   const [order] = orders.filter((order) => {
-    return order.id == id;
+    return order._id==id;
   });
   const [user] = users.filter((user) => {
-    return user.id == order.user_id;
+    return user._id === order.user_id;
   });
+  //console.log(users)
 
   const deliverHandler = () => {
-    fetch(`http://localhost:8000/orders/${id}`, {
+    fetch(`http://localhost:9999/orders/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -122,7 +123,7 @@ const OrderScreen = ({ orders, users }) => {
                   <Button
                     type="button"
                     className="btn btn-block"
-                    onClick={deliverHandler}
+                     onClick={deliverHandler}
                   >
                     Mark As Delivered
                   </Button>

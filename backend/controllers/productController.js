@@ -1,5 +1,6 @@
 const product = require('../models/productModel')
 
+
 const getproducts = async (req,res)=>{
     product.find({})
     .then(products=>{
@@ -12,17 +13,18 @@ const getproducts = async (req,res)=>{
 
 const postproduct = async (req,res)=>{
     const postproduct = req.body
+    
     product.create(postproduct)
     .then(result=>{
         if(result){
-            res.status(200).send("Product Added")
+            res.status(200).json({msg:"Product Added"})
         }
         else{
-            res.status(400).send("Incorrect request")
+            res.status(400).json({msg:"Incorrect request"})
         }
     })
     .catch(err=>{
-        res.sendStatus(500)
+        res.send(500).json({msg:"Error in Uploading to Database"})
         console.log(err)
     })
     

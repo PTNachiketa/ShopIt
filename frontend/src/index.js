@@ -7,7 +7,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ErrorBoundary } from "react-error-boundary";
 
-// import { AuthContextProvider } from "./store/auth-context";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

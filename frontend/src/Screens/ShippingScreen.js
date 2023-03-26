@@ -12,7 +12,7 @@ const ShippingScreen = () => {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("India");
 
   const dispatch = useDispatch();
 

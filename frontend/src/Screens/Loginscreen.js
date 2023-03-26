@@ -4,6 +4,7 @@ import { Form, Button, Row, Col , Alert  } from 'react-bootstrap'
 import { useDispatch} from 'react-redux'
 import { authAction } from '../store/store'
 import FormContainer from '../components/FormContainer'
+import Message from '../components/Message'
 
 
 
@@ -12,43 +13,75 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('')
   const [users,setusers] = useState(null)
   const [alert,setAlert] = useState(null)
+  const [error, setError] = useState(null)
+  const [isLoading, setIsLoading] = useState(null)
 
   const dispatch = useDispatch()
-  useEffect(() => {
-    fetch( "http://localhost:8000/users")
-    .then(res =>{
+  // useEffect(() => {
+  //   fetch( "http://localhost:8000/users")
+  //   .then(res =>{
       
-      return res.json()
+  //     return res.json()
        
-    })
-    .then(res1 =>{
+  //   })
+  //   .then(res1 =>{
         
-        setusers(res1)
+  //       setusers(res1)
         
-    })
-    .catch(err=>{
-      console.log(err)
-    })
+  //   })
+  //   .catch(err=>{
+  //     console.log(err)
+  //   })
   
     
-  }, [])
+  // }, [])
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault()
- 
-    users.map((user)=>{
+    setIsLoading(true)
+    setError(null)
+
+    const response = await fetch('http://localhost:9999/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ email, password })
+    })
+    const json = await response.json()
+
+    if (!response.ok) {
+      setIsLoading(false)
+      setError(json.error)
+    }
+    if (response.ok) {
+      // save the user to local storage
+      localStorage.setItem('user', JSON.stringify(json))
+
+      // update the redux context
       
-        if ((user.email==email)&&(user.password==password)) {
-          dispatch(authAction.login(user))
-          if(user.Token=="Admin1001"){
+        dispatch(authAction.login(json.user))
+          if(json.AdminToken=="Admin1001"){
             dispatch(authAction.setAdmin())
           }
-          
-          console.log("logged in")
-          setAlert(true)
-        }
+
+      // update loading state
+      setIsLoading(false)
+
+      setAlert(true)
+    }
+ 
+    // users.map((user)=>{
       
-    })
+    //     if ((user.email==email)&&(user.password==password)) {
+    //       dispatch(authAction.login(user))
+    //       if(user.Token=="Admin1001"){
+    //         dispatch(authAction.setAdmin())
+    //       }
+          
+    //       console.log("logged in")
+    //       setAlert(true)
+    //     }
+      
+    // })
 
 
   }
@@ -59,6 +92,7 @@ const LoginScreen = () => {
       {alert&&<Alert variant='success' >
            logged in
         </Alert>}
+        {error && <Message variant='danger'>{error}</Message>}
         
       <Form onSubmit={submitHandler} autoComplete='off'>
         <Form.Group className='mb-3' controlId='email'>

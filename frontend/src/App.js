@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./bootstrapSandStone.min.css"
 import { useState,useEffect } from "react";
 import { Container } from "react-bootstrap";
+import {useDispatch} from "react-redux";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Homescreen from "./Screens/Homescreen";
@@ -17,11 +18,13 @@ import PaymentScreen from "./Screens/PaymentScreen";
 import PlaceOrderScreen from "./Screens/PlaceOrderScreen";
 import OrderScreen from "./Screens/OrderScreen";
 import OrderListScreen from "./Screens/OrderListScreen";
+import { authAction } from "./store/store";
 
 function App() {
   const [products,setproducts] = useState(null)
   const [users,setusers] = useState(null)
   const [orders,setOrders] = useState(null)
+  const dispatch = useDispatch();
  
   
   useEffect(() => {
@@ -63,7 +66,7 @@ function App() {
   }, [users])
 
   useEffect(() => {
-    fetch( "http://localhost:8000/orders")
+    fetch( "http://localhost:9999/orders")
     .then(res =>{
       
       return res.json()
@@ -80,6 +83,17 @@ function App() {
   
     
   }, [orders])
+
+  useEffect(()=>{
+    const user = JSON.parse(localStorage.getItem('user'))
+  
+    if(user){
+      dispatch(authAction.login(user))
+            if(user.Token=="Admin1001"){
+              dispatch(authAction.setAdmin())
+            }
+    }
+  },[])
   
   return (
     <Router>
@@ -99,7 +113,7 @@ function App() {
             <Route path="/shipping" element={products?<ShippingScreen props={products} />:<h5>Loading..</h5>} />
             <Route path='/order/:id' element={orders?<OrderScreen orders={orders} users={users}/>:<h5>Loading..</h5>} />
             <Route path="/placeorder" element={products?<PlaceOrderScreen props={products} />:<h5>Loading..</h5>} />
-            <Route path='/orderlist' element={<OrderListScreen orders={orders}/>} />
+            <Route path='/orderlist' element={<OrderListScreen orders={orders} users={users}/>} />
           </Routes>
         </Container>
       </main>

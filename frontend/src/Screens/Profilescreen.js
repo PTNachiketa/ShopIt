@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Table, Form, Button, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
+import { authAction } from '../store/store'
 import Message from '../components/Message'
 
 
@@ -15,6 +16,7 @@ const ProfileScreen = () => {
   const [update,setUpdate] = useState(null)
   const [orders, setOrders] = useState(null)
   const [user,setUser] = useState(null)
+  const dispatch = useDispatch();
 
   const token = useSelector((state) => state.auth.token)
 
@@ -23,7 +25,7 @@ const ProfileScreen = () => {
  // const orders = useSelector((state) => state.cart.orders)
 
   useEffect(() => {
-    fetch( "http://localhost:8000/orders")
+    fetch( "http://localhost:9999/orders")
     .then(res =>{
       
       return res.json()
@@ -62,7 +64,6 @@ const ProfileScreen = () => {
                     flag = 1
                     userupdate = {
                         ...user,
-                        id: user.id,
                         name: name
                     }
                 }
@@ -70,7 +71,6 @@ const ProfileScreen = () => {
                   flag = 1
                   userupdate = {
                       ...user,
-                      id: user.id,
                       name: name,
                       password: password
                   }
@@ -80,13 +80,14 @@ const ProfileScreen = () => {
 
         if(flag === 1){
             console.log(userupdate);
-            fetch(`http://localhost:9999/users/${userupdate.id}`,{
+            fetch(`http://localhost:9999/users/${userupdate._id}`,{
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(userupdate)
           })
+        dispatch(authAction.login(userupdate))
         setUpdate(true)
     }
     
@@ -164,7 +165,7 @@ const ProfileScreen = () => {
             <thead>
               <tr>
 
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>PRICE</th>
                 <th>PAID</th>
                 <th>DELIVERED</th>
@@ -173,9 +174,9 @@ const ProfileScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {orders&&orders.filter(order =>order.user_id==token.id ).map((order) => (
-                <tr key={order.id}>
-                  <td>{order.id}</td>
+              {orders&&orders.filter(order =>order.user_id===token._id ).map((order) => (
+                <tr key={order._id}>
+                  {/* <td>{orders.id}</td> */}
                   <td>{order.orders.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
@@ -193,7 +194,7 @@ const ProfileScreen = () => {
                   </td>
                  
                   <td>
-                    <LinkContainer to={`/order/${order.id}`}>
+                    <LinkContainer to={`/order/${order._id}`}>
                       <Button className='btn-sm' variant='light'>
                         Details
                       </Button>

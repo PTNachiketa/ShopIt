@@ -12,6 +12,9 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(authAction.logout());
+    
+    // remove user from storage
+    localStorage.removeItem('user')
   };
 
   return (
