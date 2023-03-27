@@ -8,6 +8,10 @@ const multer  = require('multer');
 const path = require('path');
 const {getOrders, postOrder,updateOrder } = require('./controllers/orderController');
 //const product = require('./models/productModel')
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+const helmet = require('helmet')
+
 
 require('dotenv').config()
 
@@ -15,6 +19,11 @@ const port = process.env.PORT
 const mongo_uri = process.env.DATABASE
 const app = express()
 app.use(express.json())
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use(helmet())
+
 
 //middleware to allow requests from a domain 
 app.use((req, res, next) => {
