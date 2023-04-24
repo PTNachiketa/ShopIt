@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   });
 
 //connecting to DB and Starting server
-mongoose.connect("mongodb+srv://nachiketa:Nachi@09@shopitdatabase.rrn4lrx.mongodb.net/test")
+mongoose.connect("mongodb+srv://nachiketa:VWuIjQyTfLPFKQsx@shopitdatabase.rrn4lrx.mongodb.net/test")
 .then(()=>{
     app.listen(9999,()=>{
         console.log(`Server connected to DB and Running on port 9999`)
