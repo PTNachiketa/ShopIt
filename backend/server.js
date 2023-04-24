@@ -37,10 +37,10 @@ app.use((req, res, next) => {
   });
 
 //connecting to DB and Starting server
-mongoose.connect(mongo_uri)
+mongoose.connect("mongodb+srv://nachiketa:VWuIjQyTfLPFKQsx@shopitdatabase.rrn4lrx.mongodb.net/?retryWrites=true&w=majority")
 .then(()=>{
-    app.listen(port,()=>{
-        console.log(`Server connected to DB and Running on port ${port}`)
+    app.listen(9999,()=>{
+        console.log(`Server connected to DB and Running on port 9999`)
     })
 })
 .catch((err)=>{
