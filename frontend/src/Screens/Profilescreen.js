@@ -43,6 +43,8 @@ const ProfileScreen = () => {
     
   }, [orders])
 
+ 
+
   
   let flag = 0
   let userupdate = {}
@@ -50,6 +52,13 @@ const ProfileScreen = () => {
   const submitHandler = async (e) => {
     
     e.preventDefault()
+    if(email==token.email){
+      setMessage(null)
+    }
+    if(email!=token.email){
+      setMessage('Invalid Email')
+      return;
+    }
     if(password!=confirmPassword){
 
       setMessage('Passwords do not match')

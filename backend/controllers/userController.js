@@ -51,23 +51,6 @@ const postuser = async(req,res)=>{
     
 }
 
-// const updateuser = async(req,res)=>{
-//     const updateduser = req.body
-
-//     User.updateOne({email:updateduser.email},{name:updateduser.name,password:updateduser.password})
-//     .then(result=>{
-//         if(result){
-//             res.status(200).send(result)
-//         }
-//         else{
-//             res.status(400).send(result)
-//         }
-//     })
-//     .catch(err=>{
-//         console.log(err)
-//         res.sendStatus(500)
-//     })
-// }
 
 const updateuser = async (req,res)=>{
     const userId = req.params.id;

@@ -36,8 +36,8 @@ const Productscreen = ({ props }) => {
       </Link>
 
       <Row>
-        <Col md={6}>
-          <Image src={product.image} alt={product.name} fluid />
+        <Col md={4}>
+          <Image src={product.image} alt={product.name} fluid  style={{height:'350px'}}/>
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
@@ -54,7 +54,7 @@ const Productscreen = ({ props }) => {
             <ListGroup.Item>Description: {product.description}</ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={3}>
+        <Col md={4} style={{marginLeft:'40px'}}>
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item>
@@ -114,4 +114,4 @@ const Productscreen = ({ props }) => {
   );
 };
 
-export default Productscreen;
+export default Productscreen;

@@ -25,6 +25,7 @@ function App() {
   const [users,setusers] = useState(null)
   const [orders,setOrders] = useState(null)
   const dispatch = useDispatch();
+  const [filteredProducts, setFilteredProducts] = useState(null)
  
   
   useEffect(() => {
@@ -94,14 +95,20 @@ function App() {
             }
     }
   },[])
+
+  function searchProducts(query) {
+    const filtered = products.filter(product => product.name.toLowerCase().includes(query.toLowerCase()));
+    console.log(filtered);
+    setFilteredProducts(filtered);
+  }
   
   return (
     <Router>
-      <Header />
+      <Header submitHandler={searchProducts}/>
       <main>
         <Container>
           <Routes>
-            <Route path="/" element={products?<Homescreen products={products}/>:<h5>Loading..</h5>} exact />
+            <Route path="/" element={products?<Homescreen products={ filteredProducts != null ? filteredProducts : products}/>:<h5>Loading..</h5>} exact />
             <Route path="/product/:id" element={products?<Productscreen props={products} />:<h5>Loading..</h5>} />
             <Route path="/cart" element={products?<Cartscreen props={products} />:<h5>Loading..</h5>} />
             <Route path="/login" element={products?<LoginScreen />:<h5>Loading..</h5>} />

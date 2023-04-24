@@ -5,12 +5,12 @@ import Rating from '../components/Rating';
 
 const Products = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded">
-      <Link to={`/product/${product.id}`}>
-        <Card.Img src={product.image} variant="top" />
+    <Card className="my-3 p-3 rounded" style={{height:'22rem'}}>
+      <Link to={`/product/${product.id}`} style={{textDecoration:'none'}}>
+        <Card.Img src={product.image} variant="top" style={{height:'auto',width:'10rem'}}/>
       </Link>
       <Card.Body>
-        <Link id="GFG" to={`/product/${product.id}`}>
+        <Link id="GFG" to={`/product/${product.id}`}  style={{textDecoration:'none',color:'black'}}>
           <Card.Title as="div">
             <strong>{product.name}</strong>
           </Card.Title>
@@ -26,4 +26,4 @@ const Products = ({ product }) => {
   );
 };
 
-export default Products;
+export default Products;

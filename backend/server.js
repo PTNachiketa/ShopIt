@@ -22,10 +22,12 @@ app.use(express.json())
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+
+//security middleware
 app.use(helmet())
 
 
-//middleware to allow requests from a domain 
+//middleware to allow requests from a domain(CORS)
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); 
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
