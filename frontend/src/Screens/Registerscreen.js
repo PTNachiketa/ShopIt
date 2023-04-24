@@ -38,7 +38,7 @@ const RegisterScreen = () => {
         "Token" : token
       }
  
-     const response = await fetch("http://localhost:9999/users",{
+     const response = await fetch("https://shopit-qstb.onrender.com/users",{
        method : 'POST',
        body : JSON.stringify(user),
        headers : {'Content-Type' : 'application/json'}

@@ -19,7 +19,7 @@ const PlaceOrderScreen = () => {
   //console.log(user)
 
   const updateOrders = async (order) => {
-    await fetch("http://localhost:9999/orders", {
+    await fetch("https://shopit-qstb.onrender.com/orders", {
       method: "POST",
       body: JSON.stringify({
         orders: order,

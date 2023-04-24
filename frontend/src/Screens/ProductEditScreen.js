@@ -20,7 +20,7 @@ const ProductEditScreen = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:9999/products")
+    fetch("https://shopit-qstb.onrender.com/products")
     .then(res =>{
       
       return res.json()
@@ -77,7 +77,7 @@ const ProductEditScreen = () => {
       formData.append('image', fileInput.files[0]);
  
       try {
-        const response = await fetch('http://localhost:9999/products', {
+        const response = await fetch('https://shopit-qstb.onrender.com/products', {
           method: 'POST',
           body: formData
         });

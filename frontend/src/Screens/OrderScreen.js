@@ -18,7 +18,7 @@ const OrderScreen = ({ orders, users }) => {
   //console.log(users)
 
   const deliverHandler = () => {
-    fetch(`http://localhost:9999/orders/${id}`, {
+    fetch(`https://shopit-qstb.onrender.com/orders/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

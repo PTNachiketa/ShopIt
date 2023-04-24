@@ -29,7 +29,7 @@ function App() {
  
   
   useEffect(() => {
-    fetch("http://localhost:9999/products")
+    fetch("https://shopit-qstb.onrender.com/products")
     .then(res =>{
       
       return res.json()
@@ -48,7 +48,7 @@ function App() {
   }, [products])
 
   useEffect(() => {
-    fetch( "http://localhost:9999/users")
+    fetch( "https://shopit-qstb.onrender.com/users")
     .then(res =>{
       
       return res.json()
@@ -67,7 +67,7 @@ function App() {
   }, [users])
 
   useEffect(() => {
-    fetch( "http://localhost:9999/orders")
+    fetch( "https://shopit-qstb.onrender.com/orders")
     .then(res =>{
       
       return res.json()

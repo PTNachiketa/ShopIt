@@ -65,7 +65,7 @@ const ProfileScreen = () => {
       return;
     }
     else{
-      await fetch('http://localhost:9999/users')
+      await fetch('https://shopit-qstb.onrender.com/users')
         .then(response => response.json())
         .then(users => {
             users.forEach(user => {
@@ -89,7 +89,7 @@ const ProfileScreen = () => {
 
         if(flag === 1){
             console.log(userupdate);
-            fetch(`http://localhost:9999/users/${userupdate._id}`,{
+            fetch(`https://shopit-qstb.onrender.com/users/${userupdate._id}`,{
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
