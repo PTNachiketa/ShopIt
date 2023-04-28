@@ -5,6 +5,7 @@ async function getOrders(req, res) {
   try {
     const orders = await order.find();
     res.status(200).json(orders);
+    console.log(orders);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
@@ -25,7 +26,8 @@ async function postOrder(req, res) {
 
   try {
     const savedOrder = await newOrder.save();
-    res.json(savedOrder);
+    console.log(savedOrder);
+    res.status(200).json(savedOrder);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
@@ -35,6 +37,7 @@ async function postOrder(req, res) {
 //update Order
 const updateOrder = async (req,res)=>{
   const orderId = req.params.id
+  console.log(orderId);
   try {
     const orderU = await order.findById(orderId);
 
@@ -45,9 +48,10 @@ const updateOrder = async (req,res)=>{
 
     orderU.isDelivered = true;
     await orderU.save();
-
+    res.status(200).json({message : "Order updated successfully"})
     //console.log('Order updated successfully:', orderU);
   } catch (error) {
+    res.status(404).json({message : "Order not found"})
     console.error('Server error:', error);
   }
 

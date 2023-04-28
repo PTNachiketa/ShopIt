@@ -25,7 +25,7 @@ const ProfileScreen = () => {
  // const orders = useSelector((state) => state.cart.orders)
 
   useEffect(() => {
-    fetch( "http://localhost:9999/orders")
+    fetch( "https://shopit-qstb.onrender.com/orders")
     .then(res =>{
       
       return res.json()

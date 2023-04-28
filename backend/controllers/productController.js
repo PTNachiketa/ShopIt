@@ -4,9 +4,10 @@ const product = require('../models/productModel')
 const getproducts = async (req,res)=>{
     product.find({})
     .then(products=>{
-        res.json(products)
+        res.status(200).json(products)
     })
     .catch(err=>{
+        res.status(404).json({error: err.message})
         console.log(err)
     })
 }
@@ -25,7 +26,8 @@ const postproduct = async (req,res)=>{
         }
     })
     .catch(err=>{
-        res.send(500).json({msg:"Error in Uploading to Database"})
+        console.log("error: ", err.message);
+        res.status(500).json({msg:"Error in Uploading to Database"})
         console.log(err)
     })
     
@@ -35,7 +37,7 @@ const deleteproduct = async(req,res)=>{
     const id = req.params.id
     product.deleteOne({id:id})
     .then(result=>{
-        res.send(result)
+        res.status(200).send(result)
         console.log(result)
     })
     .catch(err=>{

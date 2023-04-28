@@ -93,5 +93,9 @@ app.post('/orders',postOrder)
 
 app.put('/orders/:id',updateOrder)
 
+module.exports = app;
+
+//app.get('/api/config/paypal',(req,res)=>res.send("AcKF2CoFobzqd2inM-KXiS3wSrFTURuZxAoD_QP6OPMKgPfsNL0V93CQ4bJakWedCENUQT5Xp7ZyFZAc"))
+
 
 

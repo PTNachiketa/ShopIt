@@ -1,22 +1,37 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
+// import {PayPalButton} from 'react-paypal-button-v2'
 import { cartAction } from "../store/store";
+import axios from "axios"
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
   const userI = useSelector((state) => state.auth.token);
   const orderI = useSelector((state) => state.cart.order);
   const price = useSelector((state) => state.cart.Price);
+  // const [sdkReady, setSdkReady] = useState(false)
   const tax = () => {
     return (price * 8) / 100;
   };
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'))
-  //console.log(user)
+  // useEffect(()=>{
+  //   const addPayPalScript = async () => {
+  //     const { data: clientId } = await axios.get('/api/config/paypal')
+  //     const script = document.createElement('script')
+  //     script.type = 'text/javascript'
+  //     script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+  //     script.async = true
+  //     script.onload = () => {
+  //       setSdkReady(true)
+  //     }
+  //     document.body.appendChild(script)
+  //   }
+  // },[])
 
   const updateOrders = async (order) => {
     await fetch("https://shopit-qstb.onrender.com/orders", {
@@ -127,9 +142,20 @@ const PlaceOrderScreen = () => {
                   <Col>Total</Col>
                   <Col>₹{price + 100 + tax()}</Col>
                 </Row>
-              </ListGroup.Item>
+              {/* </ListGroup.Item>
               <ListGroup.Item>
                 {/* {error && <Message variant='danger'>{error}</Message>} */}
+                {/* <ListGroup.Item>
+                  {/* {loadingPay && <Loader />} */}
+                  {/* {!sdkReady ? (
+                    <Loader />
+                  ) : ( */}
+                    {/* <PayPalButton
+                      amount={price + 100 + tax()}
+                       onSuccess={placeOrderHandler}
+                    />
+                   {/* )} */}
+                {/* </ListGroup.Item>  */} 
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
